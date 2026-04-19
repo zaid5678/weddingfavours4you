@@ -5,23 +5,33 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // --- Hamburger Menu ---
+  // Move nav to <body> when open so it escapes the header's stacking context
   const hamburger = document.getElementById('hamburger');
   const navLinks  = document.getElementById('navLinks');
 
   if (hamburger && navLinks) {
+    const navParent = navLinks.parentElement;
+
+    function openMenu() {
+      document.body.appendChild(navLinks);
+      navLinks.classList.add('nav-open');
+      hamburger.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      navParent.insertBefore(navLinks, hamburger);
+      navLinks.classList.remove('nav-open');
+      hamburger.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
     hamburger.addEventListener('click', function () {
-      hamburger.classList.toggle('is-open');
-      navLinks.classList.toggle('nav-open');
-      document.body.style.overflow = navLinks.classList.contains('nav-open') ? 'hidden' : '';
+      hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
     });
 
-    // Close menu on link click
     navLinks.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        hamburger.classList.remove('is-open');
-        navLinks.classList.remove('nav-open');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMenu);
     });
   }
 
