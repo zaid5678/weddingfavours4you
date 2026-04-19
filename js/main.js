@@ -115,9 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const card = document.createElement('div');
       card.className = 'review-card animate-on-scroll';
       card.innerHTML =
-        '<div class="review-stars">★★★★★</div>' +
-        '<p class="review-quote">' + escapeHtml(review.text) + '</p>' +
-        '<p class="review-author">' + escapeHtml(review.author) + '</p>';
+        '<p class="review-quote">' + escapeHtml(review.text) + '</p>';
       reviewsContainer.appendChild(card);
     });
 
